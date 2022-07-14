@@ -6,6 +6,11 @@
 ###                                                              ###
 ####################################################################
 
+#Database Connection:
+mysql:
+  url:
+  user:
+  password:
 
 # A server message is formatted into two parts
 # Example: <prefix> <message>

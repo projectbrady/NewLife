@@ -8,6 +8,7 @@ import me.projectbrady.newlife.listeners.PlayerJoin;
 import me.projectbrady.newlife.utils.ChatUtils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -34,22 +35,22 @@ public final class Main extends JavaPlugin implements Listener {
 
         //Create database
         try {
-            this.database = new Database();
+            this.database = new Database(this);
             this.database.initializeDatabase();
         } catch (SQLException e) {
-            Bukkit.getLogger().info("[New Life] Unable to connect to database and create tables");
+            Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.RED + "Unable to connect to database and create tables");
         }
 
 
         //setup economy
         if (!setupEconomy() ) {
-            Bukkit.getLogger().info("Disabled due to no Vault dependency found!");
+            Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.RED + "Disabled due to no Vault dependency found!");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
         //register events & commands
-        Bukkit.getLogger().info("[NewLife] has been enabled | version 0.0.1");
+        Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.AQUA + "has been enabled | version 0.0.1");
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new PlayerJoin(chat, database), this);
         pluginManager.registerEvents(new PlayerChat(chat), this);
@@ -67,7 +68,7 @@ public final class Main extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        Bukkit.getLogger().info("[NewLife] has been disabled");
+        Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.AQUA + "has been disabled");
     }
 
     public Database getDatabase() {

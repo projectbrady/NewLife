@@ -1,7 +1,9 @@
 package me.projectbrady.newlife.db;
 
+import me.projectbrady.newlife.Main;
 import me.projectbrady.newlife.models.PlayerStats;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -9,6 +11,12 @@ import java.sql.*;
 public class Database {
 
     private Connection connection;
+    private Main plugin;
+
+    public Database(Main plugin) {
+        this.plugin = plugin;
+    }
+
 
     public Connection getConnection() throws SQLException{
 
@@ -16,17 +24,22 @@ public class Database {
            return connection;
        }
 
-        String url = "";
-        String user = "";
-        String password = "";
+        String url = Main.plugin.getConfig().getString("mysql.url");
+        String user = Main.plugin.getConfig().getString("mysql.user");
+        String password = Main.plugin.getConfig().getString("mysql.password");
 
         //connect to database
         try {
             this.connection = DriverManager.getConnection(url, user, password);
-            Bukkit.getLogger().info("[NewLife] Database Connected");
+            Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.AQUA + "Database Connected");
         } catch (SQLException e) {
             e.printStackTrace();
-            Bukkit.getLogger().info("[NewLife] Database Not Connected");
+            Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.RED + ChatColor.BOLD + "Database Not Connected");
+            Bukkit.getConsoleSender().sendMessage("" + ChatColor.RED + ChatColor.BOLD + "--------------------------------------------------------------------------------------");
+            Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.RED + ChatColor.BOLD + "PLEASE MAKE SURE YOU HAVE FILLED OUT THE" +
+                    " DATABASE INFORMATION IN CONFIG.YML");
+            Bukkit.getConsoleSender().sendMessage("" + ChatColor.RED + ChatColor.BOLD + "--------------------------------------------------------------------------------------");
+
         }
 
         return this.connection;
@@ -40,7 +53,7 @@ public class Database {
 
             statement.close();
 
-            Bukkit.getLogger().info("[NewLife] Table - player_stats - created in database!");
+        Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.AQUA + "Table - player_stats - created in database!");
 
     }
 
