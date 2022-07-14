@@ -1,0 +1,12 @@
+name: NewLife
+version: '${project.version}'
+main: me.projectbrady.newlife.Main
+api-version: 1.19
+authors: [ ProjectBrady ]
+description: A New Life style to Minecraft! Economy, Custom Enchants/Items, New Recipes, New Dimensions & More! 
+
+commands:
+  balance:
+    description: shows a players balance
+  ping:
+    description: a ping/pong command

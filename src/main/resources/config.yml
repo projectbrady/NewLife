@@ -1,0 +1,25 @@
+####################################################################
+###                                                              ###
+###                                                              ###
+###                    ~ A New Life Plugin ~                     ###
+###                                                              ###
+###                                                              ###
+####################################################################
+
+
+# A server message is formatted into two parts
+# Example: <prefix> <message>
+# If you would like to disable prefix's, simply change it to ''
+# You may also call for players names by doing the following...
+# Players Name: {player}
+# In PlayerChatFormat: make sure to set a color for what you want a players message to be
+# A full list of Color Codes can be found here: https://minecraft.tools/en/color-code.php
+
+Prefix:
+  Server: "&7[&cNew Life&7] "
+  Member: "&8[&7Member&8] "
+
+Messages:
+  PlayerChatFormat: "&6{player}&7: "
+  Welcome: "&3Welcome to the server {player}!"
+  NoPermission: "&cInsufficient permissions!"
