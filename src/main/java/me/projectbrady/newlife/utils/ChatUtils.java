@@ -14,7 +14,8 @@ public class ChatUtils {
     }
 
     public static String chat(Player p, String s) {
-        String prefix = Main.plugin.getConfig().getString("Prefix.Member");
+        String prefix = Main.plugin.getConfig().getString("Prefix.Member")
+                .replace("&", "§");
 
         String playerMessage = prefix + Main.plugin.getConfig().getString("Messages.PlayerChatFormat")
                 .replace("&", "§")

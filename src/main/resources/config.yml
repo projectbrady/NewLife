@@ -6,12 +6,6 @@
 ###                                                              ###
 ####################################################################
 
-#Database Connection:
-mysql:
-  url:
-  user:
-  password:
-
 # A server message is formatted into two parts
 # Example: <prefix> <message>
 # If you would like to disable prefix's, simply change it to ''

@@ -2,7 +2,6 @@ package me.projectbrady.newlife;
 
 import me.projectbrady.newlife.commands.balance;
 import me.projectbrady.newlife.commands.ping;
-import me.projectbrady.newlife.db.Database;
 import me.projectbrady.newlife.listeners.PlayerChat;
 import me.projectbrady.newlife.listeners.PlayerJoin;
 import me.projectbrady.newlife.utils.ChatUtils;
@@ -24,7 +23,6 @@ public final class Main extends JavaPlugin implements Listener {
     private static Economy econ;
     public static Plugin plugin;
     public static FileConfiguration config;
-    private Database database;
     private final String chat = String.valueOf(new ChatUtils());
 
 
@@ -32,15 +30,6 @@ public final class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         plugin = this;
         config = getConfig();
-
-        //Create database
-        try {
-            this.database = new Database(this);
-            this.database.initializeDatabase();
-        } catch (SQLException e) {
-            Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.RED + "Unable to connect to database and create tables");
-        }
-
 
         //setup economy
         if (!setupEconomy() ) {
@@ -52,7 +41,7 @@ public final class Main extends JavaPlugin implements Listener {
         //register events & commands
         Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.AQUA + "has been enabled | version 0.0.1");
         PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new PlayerJoin(chat, database), this);
+        pluginManager.registerEvents(new PlayerJoin(chat), this);
         pluginManager.registerEvents(new PlayerChat(chat), this);
 
         getCommand("ping").setExecutor(new ping(chat));
@@ -62,17 +51,12 @@ public final class Main extends JavaPlugin implements Listener {
         plugin.getConfig().options().copyDefaults();
         plugin.saveDefaultConfig();
 
-
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         Bukkit.getConsoleSender().sendMessage("" + ChatColor.LIGHT_PURPLE + "[NewLife] " + ChatColor.AQUA + "has been disabled");
-    }
-
-    public Database getDatabase() {
-        return database;
     }
 
     private boolean setupEconomy() {
